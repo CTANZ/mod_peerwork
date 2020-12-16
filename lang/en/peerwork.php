@@ -330,6 +330,9 @@ File(s) attached:
 Grades you have submitted:
 {$a->grades}';
 $string['exportxls'] = 'Export all group grades';
+$string['exportallgroupspeersassessments'] = 'Export all group peer assessments';
+$string['viewallgroupspeersassessments'] = 'View all group peer assessments';
+$string['viewallgroups'] = 'View all groups';
 
 $string['eventsubmission_viewed'] = 'peerwork view submit assignment form';
 $string['eventsubmission_created'] = 'peerwork submission created';
@@ -341,10 +344,10 @@ $string['eventpeer_grade_overridden'] = 'peerwork peer grade overridden';
 $string['eventpeer_feedback_created'] = 'peerwork peer feedback';
 $string['eventassessable_submitted'] = 'peerwork submit';
 $string['eventsubmission_grade_form_viewed'] = 'peerwork view grading form';
+$string['eventsubmission_all_peer_assessments_viewed'] = 'peerwork all peer assessments viewed';
 $string['eventsubmission_graded'] = 'peerwork grade';
 $string['eventsubmission_exported'] = 'peerwork export';
 $string['eventsubmissions_exported'] = 'peerwork export all';
+$string['eventsubmissions_exported_peer_assessments'] = 'peerwork export all peer assessments';
 
 $string['multiplegroups'] = 'The following people belong to more than one group: {$a}. Their grades have not been updated.';
-
-

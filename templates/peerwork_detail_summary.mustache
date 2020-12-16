@@ -34,6 +34,7 @@
                 "peergradefor":[
                     {
                         "name":"George Berkeley",
+                        "username": "abc123",
                         "gradedby":[
                             {
                                 "name":"John Stuart Mill",
@@ -45,6 +46,7 @@
                 "peergradedby":[
                     {
                         "name":"George Berkeley",
+                        "username": "abc123",
                         "gradefor":[
                             {
                                 "name":"John Stuart Mill",
@@ -52,6 +54,9 @@
                             }
                         ]
                     }
+                ],
+                "peergradetotals":{
+                    "total":"25"
                 ]                 
             }
         ]
@@ -65,20 +70,28 @@
     <tr>
         <th></th>
         {{# peergradefor }}
-        <th>{{ name }}</th>
+        <th><span title="{{ username }}">{{ name }}</span></th>
         {{/ peergradefor }}
     </tr>
     </thead>
     <tbody>
         {{# peergradedby }}        
         <tr>
-            <td>{{{ name }}}</td>
+            <td><span title="{{ username }}">{{{ name }}}</span></td>
             {{# gradefor }} 
             <td>{{{ grade }}}</td> 
             {{/ gradefor }}           
         </tr>
         {{/ peergradedby }}
     </tbody>
+    <tfoot>
+    <tr>
+        <th></th>
+        {{# peergradetotals }}
+        <th>{{ total }}</th>
+        {{/ peergradetotals }}
+    </tr>
+    </tfoot>
 </table>
 {{/ criteria }}
 </br>
@@ -101,6 +114,3 @@
     </div>
 </div>
 {{/ overridepeergrades }}
-
-
-

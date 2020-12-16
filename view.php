@@ -94,6 +94,8 @@ if (has_capability('mod/peerwork:grade', $context)) {
     }
 
     $allgroups = groups_get_all_groups($course->id, 0, $groupingid);
+    // Naturally Sort the groups by name
+    array_multisort(array_column($allgroups, 'name'), SORT_NATURAL, $allgroups);
     $anynongraded = false;
 
     $t = new html_table();
@@ -166,6 +168,9 @@ if (has_capability('mod/peerwork:grade', $context)) {
     echo html_writer::table($t);
 
     echo $OUTPUT->box_start('generalbox', null);
+
+    echo $OUTPUT->single_button(new moodle_url('viewallgroupspeersassessments.php', array('id' => $cm->id)),
+        get_string("viewallgroupspeersassessments", 'mod_peerwork'), 'get');
 
     echo $OUTPUT->single_button(new moodle_url('export.php', array('id' => $cm->id, 'groupid' => 0, 'sesskey' => sesskey())),
         get_string("exportxls", 'mod_peerwork'), 'get');

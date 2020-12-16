@@ -131,11 +131,12 @@ class peerwork_detail_summary implements templatable, renderable {
             $table['attributes']['id'] = "mod_peerwork_peergrades";
             $table['attributes']['class'] = "table-striped $extraclasses";
             $table['caption'] = $criteria->description;
+            $gradetotal = [];
 
             foreach ($members as $member) {
                 $gradedby = [];
                 $gradefor = [];
-                $gradefor = ['name' => fullname($member)];
+                $gradefor = ['name' => fullname($member), 'username' => $member->username];
                 $label = fullname($member);
 
                 if ($canunlock && in_array($member->id, $lockedgraders)) {
@@ -151,7 +152,7 @@ class peerwork_detail_summary implements templatable, renderable {
                     );
                 }
 
-                $gradedby = ['name' => $label];
+                $gradedby = ['name' => $label, 'username' => $member->username];
 
                 $memberdropdown[$member->id] = [
                     'id' => $cmid,
@@ -161,6 +162,7 @@ class peerwork_detail_summary implements templatable, renderable {
                     'name' => fullname($member)
                 ];
 
+                $i = 1;
                 foreach ($members as $peer) {
                     if (
                         !isset($grades->grades[$critid]) ||
@@ -171,6 +173,7 @@ class peerwork_detail_summary implements templatable, renderable {
                             'name' => fullname($peer),
                             'grade' => '-'
                         ];
+                        $grade = 0;
                     } else {
                         $feedbacktext = '';
                         $override = '';
@@ -234,6 +237,12 @@ class peerwork_detail_summary implements templatable, renderable {
                         ];
                     }
 
+                    if (isset($gradetotal[$i])) {
+                        $gradetotal[$i] += (int) $grade;
+                    } else {
+                        $gradetotal[$i]  = (int) $grade;
+                    }
+
                     $feedbacktext = '';
 
                     if (!isset($grades->grades[$critid]) || !isset($grades->grades[$critid][$peer->id])
@@ -284,6 +293,8 @@ class peerwork_detail_summary implements templatable, renderable {
                             'grade' => $grades->grades[$critid][$peer->id][$member->id] . $feedbacktext
                         ];
                     }
+                    $totals[$i] = $gradetotal[$i];
+                    $i++;
                 }
 
                 // Only peergradedby is used in the default template.
@@ -291,6 +302,9 @@ class peerwork_detail_summary implements templatable, renderable {
                 // when overriding template.
                 $table['peergradedby'][] = $gradedby;
                 $table['peergradefor'][] = $gradefor;
+            }
+            foreach ($totals as $key => $value) {
+                $table['peergradetotals'][] = ['total' => $value];
             }
 
             $data['criteria'][] = $table;
